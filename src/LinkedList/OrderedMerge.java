@@ -1,6 +1,8 @@
 package LinkedList;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class OrderedMerge {
@@ -9,8 +11,7 @@ public class OrderedMerge {
 		LinkedListNode firstNode = mock(firstValues, firstValues.size() - 1, null);
 		List<Integer> secondValues = Arrays.asList(300, 700, 1800, 2100);
 		LinkedListNode secondNode = mock(secondValues, secondValues.size() - 1, null);
-		merge(firstNode, secondNode);
-		System.out.println(firstNode);
+		System.out.println(merge(firstNode, secondNode));
 	}
 
 	private static LinkedListNode mock(List<Integer> values, int index, LinkedListNode node) {
@@ -26,8 +27,18 @@ public class OrderedMerge {
 		return mock(values, index - 1, newNode);
 	}
 
-	private static void merge(LinkedListNode firstNode, LinkedListNode secondNode) {
-
+	private static LinkedListNode merge(LinkedListNode firstNode, LinkedListNode secondNode) {
+		List<Integer> values = new ArrayList<>();
+		while (firstNode != null) {
+			values.add(firstNode.getValue());
+			firstNode = firstNode.getNextNode();
+		}
+		while (secondNode != null) {
+			values.add(secondNode.getValue());
+			secondNode = secondNode.getNextNode();
+		}
+		Collections.sort(values);
+		return mock(values, values.size() - 1, null);
 	}
 }
 
