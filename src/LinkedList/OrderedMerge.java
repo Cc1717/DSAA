@@ -9,7 +9,7 @@ public class OrderedMerge {
 	public static void main(String[] args) {
 		List<Integer> firstValues = Arrays.asList(100, 400, 800, 1500);
 		LinkedListNode firstNode = mock(firstValues, firstValues.size() - 1, null);
-		List<Integer> secondValues = Arrays.asList(300, 700, 1800, 2100);
+		List<Integer> secondValues = Arrays.asList(50, 700, 1800, 2100);
 		LinkedListNode secondNode = mock(secondValues, secondValues.size() - 1, null);
 		//System.out.println(mergeByRebuild(firstNode, secondNode));
 		System.out.println(mergeBySimple(firstNode, secondNode));
@@ -42,8 +42,45 @@ public class OrderedMerge {
 		return mock(values, values.size() - 1, null);
 	}
 
-	private static LinkedListNode mergeBySimple(LinkedListNode firstNode, LinkedListNode secondNode){
-		return null;
+	private static LinkedListNode mergeBySimple(LinkedListNode firstNode, LinkedListNode secondNode) {
+		LinkedListNode result = null;
+		if (firstNode.getValue() < secondNode.getValue()) {
+			result = firstNode;
+			doublePointer(firstNode, secondNode, 1);
+		} else {
+			result = secondNode;
+			doublePointer(firstNode, secondNode, 2);
+		}
+		return result;
+	}
+
+	private static void doublePointer(LinkedListNode firstNode, LinkedListNode secondNode, int model) {
+		LinkedListNode tempNode = null;
+		switch (model) {
+			case 1:
+				while (firstNode.getValue() < secondNode.getValue()) {
+					tempNode = firstNode;
+					firstNode = firstNode.getNextNode();
+					if (firstNode == null) {
+						tempNode.setNextNode(secondNode);
+						return;
+					}
+				}
+				tempNode.setNextNode(secondNode);
+				doublePointer(firstNode, secondNode, 2);
+				return;
+			case 2:
+				while (firstNode.getValue() > secondNode.getValue()) {
+					tempNode = secondNode;
+					secondNode = secondNode.getNextNode();
+					if (secondNode == null) {
+						tempNode.setNextNode(firstNode);
+						return;
+					}
+				}
+				tempNode.setNextNode(firstNode);
+				doublePointer(firstNode, secondNode, 1);
+		}
 	}
 }
 
