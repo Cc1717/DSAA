@@ -9,7 +9,7 @@ public class OrderedMerge {
 	public static void main(String[] args) {
 		List<Integer> firstValues = Arrays.asList(100, 400, 800, 1500);
 		LinkedListNode firstNode = mock(firstValues, firstValues.size() - 1, null);
-		List<Integer> secondValues = Arrays.asList(50, 700, 1800, 2100);
+		List<Integer> secondValues = Arrays.asList(50, 800, 1800, 2100);
 		LinkedListNode secondNode = mock(secondValues, secondValues.size() - 1, null);
 		//System.out.println(mergeByRebuild(firstNode, secondNode));
 		System.out.println(mergeBySimple(firstNode, secondNode));
@@ -58,7 +58,7 @@ public class OrderedMerge {
 		LinkedListNode tempNode = null;
 		switch (model) {
 			case 1:
-				while (firstNode.getValue() < secondNode.getValue()) {
+				while (firstNode.getValue() <= secondNode.getValue()) {
 					tempNode = firstNode;
 					firstNode = firstNode.getNextNode();
 					if (firstNode == null) {
@@ -70,7 +70,7 @@ public class OrderedMerge {
 				doublePointer(firstNode, secondNode, 2);
 				return;
 			case 2:
-				while (firstNode.getValue() > secondNode.getValue()) {
+				while (firstNode.getValue() >= secondNode.getValue()) {
 					tempNode = secondNode;
 					secondNode = secondNode.getNextNode();
 					if (secondNode == null) {
